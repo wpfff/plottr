@@ -10,16 +10,28 @@ import signal
 # Logic here: for mypy to work, we need to import the Qt modules to have the correct types/stubs.
 # For type checking we use PySide6, at runtime we use qtpy for backend abstraction.
 PYSIDE6 = False
+PYQT6 = False
 if TYPE_CHECKING:
     from PySide6 import QtCore, QtGui, QtWidgets
     Signal = QtCore.Signal
     Slot = QtCore.Slot
+    # In Qt6, QAction and QActionGroup moved from QtWidgets to QtGui
+    QAction = QtGui.QAction
+    QActionGroup = QtGui.QActionGroup
 else:
     import qtpy
     from qtpy import QtCore, QtGui, QtWidgets
     Signal = QtCore.Signal
     Slot = QtCore.Slot
     PYSIDE6 = qtpy.PYSIDE6
+    PYQT6 = qtpy.PYQT6
+    # In Qt6, QAction and QActionGroup moved from QtWidgets to QtGui
+    if PYSIDE6 or PYQT6:
+        QAction = QtGui.QAction
+        QActionGroup = QtGui.QActionGroup
+    else:
+        QAction = QtWidgets.QAction
+        QActionGroup = QtWidgets.QActionGroup
 
 from pyqtgraph.flowchart import Flowchart as pgFlowchart, Node as pgNode
 Flowchart = pgFlowchart

@@ -9,7 +9,7 @@ import argparse
 from typing import Union, Tuple, Optional, Type, List, Any, Type
 from packaging import version
 
-from .. import QtCore, Flowchart, Signal, Slot, QtWidgets, QtGui
+from .. import QtCore, Flowchart, Signal, Slot, QtWidgets, QtGui, QAction
 from .. import log as plottrlog
 from ..data.datadict import DataDictBase
 from ..data.datadict_storage import DDH5Loader
@@ -159,7 +159,7 @@ class AutoPlotMainWindow(PlotWindow):
         self.fileMenu = self.menu.addMenu('&Data')
 
         if self.loaderNode is not None:
-            refreshAction = QtWidgets.QAction('&Refresh', self)
+            refreshAction = QAction('&Refresh', self)
             refreshAction.setShortcut('R')
             refreshAction.triggered.connect(self.refreshData)
             self.fileMenu.addAction(refreshAction)

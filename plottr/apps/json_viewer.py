@@ -183,7 +183,7 @@ class JsonModel(QAbstractItemModel):
                 item = index.internalPointer()
                 item.value = str(value)
 
-                if __binding__ in ("PySide", "PyQt4"):  # type: ignore[name-defined]
+                if __binding__ in ("PySide", "PyQt4"):
                     self.dataChanged.emit(index, index)
                 else:
                     self.dataChanged.emit(index, index, [Qt.EditRole])
@@ -208,7 +208,7 @@ class JsonModel(QAbstractItemModel):
 
         return None
 
-    def index(self, row: int, column: int, parent: QModelIndex = QModelIndex()) -> QModelIndex:
+    def index(self, row: int, column: int, parent: QModelIndex = QModelIndex()) -> QModelIndex:  # type: ignore[override]
         """Override from QAbstractItemModel
 
         Return index according row, column and parent
@@ -246,7 +246,7 @@ class JsonModel(QAbstractItemModel):
 
         return self.createIndex(parentItem.row(), 0, parentItem)
 
-    def rowCount(self, parent: QModelIndex = QModelIndex()) -> int:
+    def rowCount(self, parent: QModelIndex = QModelIndex()) -> int:  # type: ignore[override]
         """Override from QAbstractItemModel
 
         Return row count from parent index
@@ -261,14 +261,14 @@ class JsonModel(QAbstractItemModel):
 
         return parentItem.childCount()
 
-    def columnCount(self, parent: QModelIndex = QModelIndex()) -> int:
+    def columnCount(self, parent: QModelIndex = QModelIndex()) -> int:  # type: ignore[override]
         """Override from QAbstractItemModel
 
         Return column number. For the model, it always return 2 columns
         """
         return 2
 
-    def flags(self, index: QModelIndex) -> Qt.ItemFlags:
+    def flags(self, index: QModelIndex) -> Qt.ItemFlag:  # type: ignore[override]
         """Override from QAbstractItemModel
 
         Return flags of index
