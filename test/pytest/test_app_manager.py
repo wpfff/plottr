@@ -214,29 +214,29 @@ def test_pinging_app_from_outside_manager(qtbot, tmp_path):
 
 # FIXME: This test is not working on my machine (MacBook Pro M2, MacOS Tahoe, Python 3.13)
 # it works fine on CI, and in actual applications. So let's leave it for now.
-# def test_getting_values(qtbot, tmp_path):
-#     datadict = _make_testdata()
-#     datadict_to_hdf5(datadict, str(tmp_path), 'data')
-#
-#     appManager = AppManager()
-#     appManager.show()
-#     qtbot.waitExposed(appManager)
-#     qtbot.addWidget(appManager)
-#
-#     assert appManager.launchApp(0, MODULE, FUNC, str(tmp_path), 'data')
-#
-#     context = zmq.Context()
-#     socket = context.socket(zmq.REQ)
-#     socket.connect(f'tcp://127.0.0.1:12345')
-#
-#     socket.send_pyobj(tuple(["fc", 'getOutput', None]))
-#     reply = socket.recv_pyobj()
-#
-#
-#     ret = appManager.close()
-#     assert ret
-#
-#     assert reply is not None
+def test_getting_values(qtbot, tmp_path):
+    datadict = _make_testdata()
+    datadict_to_hdf5(datadict, str(tmp_path), 'data')
+
+    appManager = AppManager()
+    appManager.show()
+    qtbot.waitExposed(appManager)
+    qtbot.addWidget(appManager)
+
+    assert appManager.launchApp(0, MODULE, FUNC, str(tmp_path), 'data')
+
+    context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect(f'tcp://127.0.0.1:12345')
+
+    socket.send_pyobj(tuple(["fc", 'getOutput', None]))
+    reply = socket.recv_pyobj()
+
+
+    ret = appManager.close()
+    assert ret
+
+    assert reply is not None
 
 
 
