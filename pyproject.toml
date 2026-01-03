@@ -52,6 +52,7 @@ Tracker = "https://github.com/toolsforexperiments/plottr/issues"
 pyqt5 = ["PyQt5"]
 pyqt6 = ["PyQt6"]
 pyside2 = ["PySide2>=5.12"]
+pyside6 = ["PySide6>=6.0"]
 qcodes = ["qcodes>=0.54.1"]
 
 [project.scripts]
