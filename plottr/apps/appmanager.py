@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Dict, Union, Any, Callable, Tuple, Optional
 
 from traceback import print_exception
-from plottr import QtCore, QtWidgets, QtGui, Flowchart, Signal, Slot, log, qtapp, qtsleep, plottrPath
+from plottr import QtCore, QtWidgets, QtGui, Flowchart, Signal, Slot, log, qtapp, qtsleep, plottrPath, PYSIDE6
 from plottr.gui.widgets import PlotWindow
 
 
@@ -268,10 +268,15 @@ class ProcessMonitor(QtCore.QObject):
             processesCopy = self.processes.copy()
             for Id, p in processesCopy.items():
                 state = p.state()
-                if state == 0:
+                if PYSIDE6 and state == QtCore.QProcess.ProcessState.NotRunning:
                     del self.processes[Id]
                     self.processTerminated.emit(Id)
-            qtsleep(0.01)
+                elif not PYSIDE6 and state == QtCore.QProcess.NotRunning:
+                    del self.processes[Id]
+                    self.processTerminated.emit(Id)
+                else:
+                    continue
+            qtsleep(0.05)
 
     @Slot()
     def onReadyStandardOutput(self) -> None:
@@ -329,7 +334,7 @@ class AppManager(QtWidgets.QWidget):
         self.procmonThread: Optional[QtCore.QThread] = QtCore.QThread(parent=self)
         self.procmon.moveToThread(self.procmonThread)
         self.newProcess.connect(self.procmon.onNewProcess)
-        self.procmon.processTerminated.connect(self.onProcessEneded)
+        self.procmon.processTerminated.connect(self.onProcessEnded)
         self.procmonThread.started.connect(self.procmon.run)
         self.procmonThread.start()
 
@@ -368,7 +373,7 @@ class AppManager(QtWidgets.QWidget):
         return False
 
     @Slot(object)
-    def onProcessEneded(self, Id: IdType) -> None:
+    def onProcessEnded(self, Id: IdType) -> None:
         """
         Gets triggered when the ProcessMonitor detects a process has been closed. Deletes the process from the internal
         dictionary.
