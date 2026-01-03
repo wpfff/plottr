@@ -18,11 +18,14 @@ if TYPE_CHECKING:
     # In Qt6, QAction and QActionGroup moved from QtWidgets to QtGui
     QAction = QtGui.QAction
     QActionGroup = QtGui.QActionGroup
+    API_NAME = 'PySide6'
 else:
     import qtpy
-    from qtpy import QtCore, QtGui, QtWidgets
+    from qtpy import QtCore, QtGui, QtWidgets, API_NAME
+
     Signal = QtCore.Signal
     Slot = QtCore.Slot
+    API_NAME = qtpy.API_NAME
     PYSIDE6 = qtpy.PYSIDE6
     PYQT6 = qtpy.PYQT6
     # In Qt6, QAction and QActionGroup moved from QtWidgets to QtGui

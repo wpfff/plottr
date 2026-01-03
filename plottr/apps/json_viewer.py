@@ -5,9 +5,12 @@ Script obtained from: https://doc-snapshots.qt.io/qtforpython-dev/examples/examp
 from typing import Any, List, Dict, Union, Optional
 from pathlib import Path
 
-from qtpy import API_NAME as __binding__
-from qtpy.QtCore import QAbstractItemModel, QModelIndex, QObject, Qt
-from qtpy.QtWidgets import QTreeView
+from .. import API_NAME as __binding__, QtCore, QtWidgets
+QAbstractItemModel = QtCore.QAbstractItemModel
+QModelIndex = QtCore.QModelIndex
+QObject = QtCore.QObject
+Qt = QtCore.Qt
+QTreeView = QtWidgets.QTreeView
 
 
 class TreeItem:
@@ -183,7 +186,7 @@ class JsonModel(QAbstractItemModel):
                 item = index.internalPointer()
                 item.value = str(value)
 
-                if __binding__ in ("PySide", "PyQt4"):
+                if __binding__ in ("PySide", "PyQt5"):
                     self.dataChanged.emit(index, index)
                 else:
                     self.dataChanged.emit(index, index, [Qt.EditRole])
