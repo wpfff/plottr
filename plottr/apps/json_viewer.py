@@ -5,6 +5,7 @@ Script obtained from: https://doc-snapshots.qt.io/qtforpython-dev/examples/examp
 from typing import Any, List, Dict, Union, Optional
 from pathlib import Path
 
+from qtpy import API_NAME as __binding__
 from qtpy.QtCore import QAbstractItemModel, QModelIndex, QObject, Qt
 from qtpy.QtWidgets import QTreeView
 

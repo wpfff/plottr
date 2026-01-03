@@ -8,12 +8,12 @@ import signal
 
 
 # Logic here: for mypy to work, we need to import the Qt modules to have the correct types/stubs.
-# For now, only for mypy we use PyQt5, but in the future we should look into PySide6.
+# For type checking we use PySide6, at runtime we use qtpy for backend abstraction.
 PYSIDE6 = False
 if TYPE_CHECKING:
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    Signal = QtCore.pyqtSignal
-    Slot = QtCore.pyqtSlot
+    from PySide6 import QtCore, QtGui, QtWidgets
+    Signal = QtCore.Signal
+    Slot = QtCore.Slot
 else:
     import qtpy
     from qtpy import QtCore, QtGui, QtWidgets
@@ -38,7 +38,7 @@ def qtsleep(delay_sec: float) -> None:
     """sleep function that allows QT event processing in the background."""
     loop = QtCore.QEventLoop()
     QtCore.QTimer.singleShot(int(delay_sec * 1000), loop.quit)
-    loop.exec_()
+    loop.exec()
 
 
 def qtapp() -> QtWidgets.QApplication:

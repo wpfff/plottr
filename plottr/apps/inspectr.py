@@ -167,7 +167,7 @@ class RunList(QtWidgets.QTreeWidget):
         crossAction.setText('Cross' if current_tag_char != self.tag_dict['cross'] else 'Uncross')
         menu.addAction(crossAction)
 
-        action = menu.exec_(self.mapToGlobal(position))
+        action = menu.exec(self.mapToGlobal(position))
         if action == copy_action:
             QtWidgets.QApplication.clipboard().setText(item.text(
                 model_index.column()))
@@ -665,7 +665,7 @@ def main(dbPath: Optional[str], log_level: Union[int, str] = logging.WARNING) ->
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         appinstance = QtWidgets.QApplication.instance()
         assert appinstance is not None
-        appinstance.exec_()
+        appinstance.exec()
 
 
 def script() -> None:

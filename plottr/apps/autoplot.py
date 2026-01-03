@@ -389,7 +389,7 @@ def main(f: str, g: str) -> int:
     app = QtWidgets.QApplication([])
     fc, win = autoplotDDH5(f, g)
 
-    return app.exec_()
+    return app.exec()
 
 
 def script() -> None:
